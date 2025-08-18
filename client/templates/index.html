@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Price Tracker</title>
+    <link rel="icon" type="image/x-icon" href="./static/image/icon.jpg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .product-card {
+            border: none;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f39d66, #dc4418, #f39d66);
+            border-radius: 16px 16px 0 0;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .product-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #484847ff 0%, #292928ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color:#292928ff;
+            margin-bottom: 0;
+            margin-top: 20px;
+            /*padding: 6px 12px;*/
+            /*background: linear-gradient(135deg, #cc9c5e 0%, #cc9c5e 100%);*/
+            /*border-radius: 20px;*/
+            display: inline-block;
+            /*box-shadow: 0 2px 8px rgba(40, 167, 69, 0.2);*/
+            width: fit-content;
+        }
+        
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #e3e6f0;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .product-divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #dee2e6 50%, transparent 100%);
+            margin: 20px 0;
+            opacity: 0.6;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        .view-more-btn {
+            background: linear-gradient(135deg, #dc4418 0%, #dc4418 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(246, 35, 28, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .view-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .view-more-btn:hover {
+            background: linear-gradient(135deg, #f39d66 0%, #f39d66 100%);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(216, 163, 97, 255);
+        }
+        
+        .view-more-btn:hover::before {
+            left: 100%;
+        }
+
+        .search-container {
+            background-color: #f39d66;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .product-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .product-info {
+                align-items: center;
+            }
+            
+            .product-image {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .product-footer {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container my-5">
+    <!-- Header -->
+    <h1 class="text-center mb-4" style="font-family:Tahoma;">Food Price Tracker</h1>
+    
+    <!-- Rounded Milk-Yellow Search Box -->
+    <div class="search-container">
+        <form method="GET" action="/" class="d-flex justify-content-center align-items-center">
+            <input type="text" name="q" class="form-control me-2" placeholder="Search for a product..." value="{{ query or '' }}" style="font-family:Helvetica;" required>
+            <button type="submit" class="btn btn-primary" style="font-family:Arial; background-color:#dc4418; border-color:#f39d66; border-width: 2px; font-size: 16px">Search</button>
+        </form>
+        <p class="mt-3 text-muted small text-center" style="font-family:Libre Baskerville;">2025 © Nwokocha Uchechi Flora</p>
+    </div>
+    
+    <!-- Results -->
+    {% if query %}
+        {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-12 col-lg-6">
+                    <div class="product-card">
+                        <!-- Product Header: Name/Price on left, Image on right -->
+                       <!-- Product Header: Name/Price on left, Image on right -->
+<div class="product-header">
+    <div class="product-info">
+        <h2 class="product-name">{{ product.name }}</h2>
+        {% if product.sources %}
+            {% for source in product.sources %}
+                <p class="product-price">
+                    {{ source.price }}
+                    <small>({{ source.source }})</small>
+                </p>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+
+    <img src="{{ product.image or './static/image/placeholder.jpg' }}" 
+         alt="{{ product.name }}" 
+         class="product-image">
+</div>
+
+
+                        
+                        <!-- Divider -->
+                        <hr class="product-divider">
+                        
+                       <!-- View More Button (right-aligned) -->
+<div class="product-footer">
+    {% if product.sources %}
+        {% for source in product.sources %}
+            <a href="{{ source.link }}" target="_blank" class="view-more-btn me-2 mb-2">
+                View on {{ source.source }}
+            </a>
+        {% endfor %}
+    {% endif %}
+</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center mt-5">
+                <p class="text-muted fs-5">No products found for "{{ query }}". Try another search.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="text-center mt-5">
+            <p class="text-muted fs-5">Search for a product to see prices.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
