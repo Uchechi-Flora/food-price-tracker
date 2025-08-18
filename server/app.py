@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder="../client/templates", static_folder="../c
 def fix_link(source_name):
     """Generate proper links for each source"""
     source_lower = source_name.lower().replace(" ", "")
-    if "packnpay" in source_lower:
+    if "osusu" in source_lower:
         return "https://pro.packnpay.com.ng"
     elif "pricepally" in source_lower:
         return "https://pricepally.com"

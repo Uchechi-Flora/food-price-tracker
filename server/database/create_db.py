@@ -29,6 +29,7 @@ print("Replaced PacknPayPro with PacknPay.")
 session.close()
 '''
 #THIS CODE BELOW, I USED IT TO REMOVE INVALID ENTRIES IN MY DB PRODUCTS THAT JUST HAVE ₦ ₦ or just a single naira symbol
+'''
 from server.database.connection import SessionLocal
 from server.database.models import ProductPrice
 
@@ -69,3 +70,15 @@ def delete_invalid_products():
 
 if __name__ == "__main__":
     delete_invalid_products()
+'''
+
+#I USED THIS CODE TO DELETE ALL PACKNPAY ENTRIES SINCE I CHANGED IT TO OSUSU BUY NOW
+
+from server.database.connection import SessionLocal
+from server.database.models import ProductPrice
+
+session = SessionLocal()
+session.query(ProductPrice).filter_by(source="PacknPay").delete()
+session.commit()
+session.close()
+print("Old PacknPay rows deleted ✅")

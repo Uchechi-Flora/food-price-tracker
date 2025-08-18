@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from server.database.connection import SessionLocal
-from server.database.dbutils import upsert_product_price  # ✅ Import here
+from server.database.db_utils import upsert_product_price  # ✅ Import here
 
 # Logging setup
 log_dir = os.path.join(os.path.dirname(__file__), "../../logs")
