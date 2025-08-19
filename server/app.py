@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from server.database.connection import SessionLocal
 from server.database.models import ProductPrice
 from collections import defaultdict
@@ -47,21 +47,16 @@ def home():
                         price_display = "N/A"
 
                         if raw_price is not None:
-                            # Pre-process the raw price string to handle inconsistent formats
                             cleaned_price = str(raw_price).replace("₦", "").replace(",", "").strip()
-
                             try:
                                 if " - " in cleaned_price:
-                                    # It's a price range string
                                     price_parts = cleaned_price.split(" - ")
                                     min_price = float(price_parts[0])
                                     max_price = float(price_parts[1])
                                     price_display = f"₦{min_price:,.0f} - ₦{max_price:,.0f}"
                                 else:
-                                    # It's a single price
                                     price_display = f"₦{float(cleaned_price):,.0f}"
                             except (ValueError, TypeError, IndexError):
-                                # Fallback if processing fails (e.g., empty string, letters, etc.)
                                 price_display = "N/A"
 
                         sources_list.append({
@@ -81,6 +76,11 @@ def home():
             session.close()
 
     return render_template("index.html", products=products, query=query)
+
+# ✅ New route to serve sitemap.xml
+@app.route("/sitemap.xml", methods=["GET"])
+def sitemap():
+    return send_from_directory(app.static_folder, "sitemap.xml")
 
 if __name__ == "__main__":
     app.run(debug=True)
