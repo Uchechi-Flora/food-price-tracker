@@ -15,5 +15,5 @@ class ProductPrice(Base):
     timestamp = Column(DateTime, default=datetime.utcnow)
 
     __table_args__ = (
-        UniqueConstraint('product_name', 'source', name='uq_product_source'),
+        UniqueConstraint('product_name', 'source', name='uq_product_source'), {"extend_existing": True},
     )
