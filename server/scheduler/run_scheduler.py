@@ -9,17 +9,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 # Import your scrapers
-from scrapers import packnpaypro, pricepally, marketfoodshop 
+from scrapers import osusubuy, pricepally, marketfoodshop 
 
 def run_all_scrapers():
     print(f"\n=== Scheduler started at {datetime.utcnow()} UTC ===\n")
 
     try:
-        print("Running PacknPay scraper...")
-        packnpaypro.run_scraper()
-        print("✅ PacknPayPro scraper finished.\n")
+        print("Running OsusuBuy scraper...")
+        osusubuy.run_scraper()
+        print("✅ OsusuBuy scraper finished.\n")
     except Exception as e:
-        print(f"❌ Error running PacknPay scraper: {e}")
+        print(f"❌ Error running OsusuBuy scraper: {e}")
 
     try:
         print("Running PricePally scraper...")
