@@ -1,6 +1,5 @@
 import os
 import sys
-import time
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -9,9 +8,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
 # Import your scrapers
-from scrapers import osusubuy, pricepally, marketfoodshop 
+from scrapers import osusubuy, pricepally, marketfoodshop
+
 
 def run_all_scrapers():
+    """Run all scrapers once."""
     print(f"\n=== Scheduler started at {datetime.utcnow()} UTC ===\n")
 
     try:
@@ -39,24 +40,9 @@ def run_all_scrapers():
 
 
 def start_scheduler():
+    """Start APScheduler to run scrapers every 6 hours in the background."""
     scheduler = BackgroundScheduler(timezone="UTC")
     scheduler.add_job(run_all_scrapers, "interval", hours=6)  # every 6 hours
     scheduler.start()
-    print("APScheduler started. Scrapers will run every 6 hours.")
-
-    try:
-        while True:
-            time.sleep(2)
-    except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()
-        print("Scheduler stopped.")
-
-
-if __name__ == "__main__":
-    # Change between one-time run or continuous scheduler
-    MODE = "scheduler"  # "once" or "scheduler"
-
-    if MODE == "once":
-        run_all_scrapers()
-    else:
-        start_scheduler()
+    print("✅ APScheduler started. Scrapers will run every 6 hours.")
+    return scheduler
