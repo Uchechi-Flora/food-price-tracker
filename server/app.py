@@ -4,8 +4,11 @@ from server.database.models import ProductPrice
 from collections import defaultdict
 
 # Import scheduler
-from run_scheduler import start_scheduler  
+from server.scheduler.run_scheduler import start_scheduler  
 
+# ✅ Start scheduler when Flask boots up
+start_scheduler()
+ 
 app = Flask(__name__, template_folder="../client/templates", static_folder="../client/static")
 
 # ✅ Start scheduler when Flask boots up
